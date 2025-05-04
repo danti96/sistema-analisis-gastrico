@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,25 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+
+    Route::get('/paciente', [ PacienteController::class, 'index' ])->name('paciente.index');
+
+    Route::post('/paciente', [ PacienteController::class, 'store' ])->name('paciente.store');
+
+    Route::get('/paciente/create', [ PacienteController::class, 'create' ])->name('paciente.create');
+
+    Route::get('/paciente/show', [ PacienteController::class, 'show' ])->name('paciente.show');
+
+    Route::put('/paciente.edit', [ PacienteController::class, 'edit' ])->name('paciente.edit');
+
+    Route::get('/paciente/paginate', [ PacienteController::class, 'paginate' ])->name('paciente.paginate');
+
+    Route::delete('/paciente', [ PacienteController::class, 'destroy' ])->name('paciente.destroy');
+
 });
