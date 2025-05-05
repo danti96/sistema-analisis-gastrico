@@ -1,5 +1,5 @@
 
-<div x-data="{open:false}" class="relative">
+<div x-data="{open:false}" class="{{-- relative --}}">
 {{-- z-10 w-full --}}
     <div @click="open=false"
         x-show="open"
@@ -26,7 +26,8 @@
     <!-- Dropdown menu -->
     {{-- right: 6rem; z-index: 10; display: none; --}}
     <div x-show="open"
-        class="z-50 absolute right-0 top-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+        {{-- class="z-50 absolute right-0 top-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"> --}}
+        class="z-50 absolute right-6 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
             {{ $slotDropdown }}
         </ul>

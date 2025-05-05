@@ -21,6 +21,7 @@
             //Toast.warning(message, null, 3000);
         }
         const route = `{{ $route }}`;
+        console.log(route, this.item.id)
         axios.delete(route.replace(':id', this.item.id)).then(success).catch(failed);
     }
 }"

@@ -36,12 +36,12 @@ Route::middleware([
 
     Route::get('/paciente/create', [ PacienteController::class, 'create' ])->name('paciente.create');
 
-    Route::get('/paciente/show', [ PacienteController::class, 'show' ])->name('paciente.show');
+    Route::get('/paciente/show/{id}', [ PacienteController::class, 'show' ])->name('paciente.show');
 
     Route::put('/paciente.edit', [ PacienteController::class, 'edit' ])->name('paciente.edit');
 
     Route::get('/paciente/paginate', [ PacienteController::class, 'paginate' ])->name('paciente.paginate');
 
-    Route::delete('/paciente', [ PacienteController::class, 'destroy' ])->name('paciente.destroy');
+    Route::delete('/paciente/{id}', [ PacienteController::class, 'destroy' ])->name('paciente.destroy');
 
 });
