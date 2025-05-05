@@ -76,7 +76,7 @@
                         href="{{ route('paciente.create') }}" />
                 </div>
             </div>
-            <div class="p-2 md:flex md:flex-col items-center gap-3 overflow-auto">
+            <div class="p-2 md:flex md:flex-col items-center gap-3 overflow-y-hidden overflow-x-auto">
                 <x-alpinejs.table.table>
                     <x-slot name="caption">
                         <div class="flex justify-start gap-4 mb-2">
@@ -121,9 +121,9 @@
                                 </x-alpinejs.table.td>
                                 <x-alpinejs.table.td>
                                     <div>
-                                        <a x-bind:href="`telf: ${item.telefono}`" class="flex gap-2 items-center">
+                                        <a x-bind:href="`telf: ${item.celular}`" class="flex gap-2 items-center">
                                             <i class="font-bold fa-solid fa-mobile-screen"></i>
-                                            <span x-text="item.telefono"></span>
+                                            <span x-text="item.celular"></span>
                                         </a>
                                         <a x-bind:href="`mailto: ${item.correo}`"
                                             class="text-blue-500 flex gap-2 items-center">

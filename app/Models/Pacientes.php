@@ -23,4 +23,15 @@ class Pacientes extends Model
         'direccion',
         'status',
     ];
+
+    protected $appends = [
+        'fullname'
+    ];
+
+
+    public function getFullnameAttribute()
+    {
+        return trim($this->apellidos . ' ' . $this->nombres);
+    }
+
 }

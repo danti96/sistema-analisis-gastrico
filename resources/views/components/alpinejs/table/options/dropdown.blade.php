@@ -1,6 +1,6 @@
 
 <div x-data="{open:false}" class="relative">
-
+{{-- z-10 w-full --}}
     <div @click="open=false"
         x-show="open"
         x-on:close.stop="open = false"
@@ -12,6 +12,7 @@
         :class="open ? 'fixed inset-0 transition-opacity bg-gray-50 bg-opacity-40' : 'hidden'"
         class=""></div>
 
+        {{-- class="w-full flex justify-center" --}}
     <button @click="open=!open"
         class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100
         focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -23,8 +24,9 @@
     </button>
 
     <!-- Dropdown menu -->
+    {{-- right: 6rem; z-index: 10; display: none; --}}
     <div x-show="open"
-        class="z-10 absolute right-0 top-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+        class="z-50 absolute right-0 top-0 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
             {{ $slotDropdown }}
         </ul>
