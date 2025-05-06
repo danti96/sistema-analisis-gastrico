@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Análisis Gástrico IA</title>
+    <title>GASTRODETECT </title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -36,7 +36,7 @@
                           </svg>
                     </div>
 
-                      Análisis Gástrico IA
+                      GASTRODETECT 
                 </div>
                  <div class="block">
                     @if (Route::has('login'))
@@ -63,7 +63,7 @@
                 <div class="container mx-auto px-8 lg:flex">
                     <div class="text-center lg:text-left lg:w-1/2">
                         <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold leading-none">
-                            Análisis Gástrico IA
+                            GASTRODETECT 
                         </h1>
                         <p class="text-xl lg:text-2xl mt-6 font-light">Una herramienta inteligente para la detección temprana del cáncer gástrico.
                         </p>
@@ -415,7 +415,7 @@
 
             <section id="features" class="py-20 lg:pb-40 lg:pt-48">
                 <div class="container mx-auto text-center">
-                    <h2 class="text-3xl lg:text-5xl font-semibold">Análisis Gástrico IA</h2>
+                    <h2 class="text-3xl lg:text-5xl font-semibold">GASTRODETECT </h2>
                     <div class="flex flex-col sm:flex-row sm:-mx-3 mt-12">
                         <div class="flex-1 px-3">
                             <div class="p-12 rounded-lg border border-solid border-gray-200 mb-8"
@@ -641,7 +641,7 @@
         <footer class=" mx-0 py-4 px-4 sm:mt-48 text-white bg-gray-500">
             <div class="flex -mx-3">
                 <div class="flex-1 px-3 text-sm">
-                    <p class="">Copyright © 2025 Análisis Gástrico IA</p>
+                    <p class="">Copyright © 2025 GASTRODETECT </p>
                 </div>
                 <div class="flex-1 px-3">
                     {{-- <h2 class="text-lg font-semibold">Important Links</h2> --}}

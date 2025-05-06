@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,13 +26,40 @@ class Pacientes extends Model
     ];
 
     protected $appends = [
-        'fullname'
+        'fullname',
+        'edad',
+        'meses',
+        'dias'
     ];
 
 
     public function getFullnameAttribute()
     {
         return trim($this->apellidos . ' ' . $this->nombres);
+    }
+
+    public function getEdadAttribute()
+    {
+        if(empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
+        $fechaNacimiento = Carbon::parse($this->fecha_nacimiento); // cambia por tu fecha
+        $hoy = Carbon::now();
+        $edad = $fechaNacimiento->diff($hoy);
+        return $edad->y;
+    }
+    public function getMesesAttribute()
+    {
+        if(empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
+        $fechaNacimiento = Carbon::parse($this->fecha_nacimiento); // cambia por tu fecha
+        $hoy = Carbon::now();
+        $edad = $fechaNacimiento->diff($hoy);
+        return $edad->m;
+    }
+    public function getDiasAttribute()
+    {        if(empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
+        $fechaNacimiento = Carbon::parse($this->fecha_nacimiento); // cambia por tu fecha
+        $hoy = Carbon::now();
+        $edad = $fechaNacimiento->diff($hoy);
+        return $edad->d;
     }
 
 }
