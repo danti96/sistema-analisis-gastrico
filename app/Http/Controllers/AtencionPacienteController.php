@@ -11,7 +11,7 @@ class AtencionPacienteController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.atencion-paciente.index');
     }
 
     /**

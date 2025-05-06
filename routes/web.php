@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AtencionPacienteController;
 use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +33,7 @@ Route::middleware([
 
     Route::get('/paciente', [ PacienteController::class, 'index' ])->name('paciente.index');
 
-    Route::post('/paciente', [ PacienteController::class, 'store' ])->name('paciente.store');
+    Route::post('/paciente', [ PacienteController::class, 'store' ])->name('paciente .store');
 
     Route::get('/paciente/create', [ PacienteController::class, 'create' ])->name('paciente.create');
 
@@ -44,4 +45,8 @@ Route::middleware([
 
     Route::delete('/paciente/{id}', [ PacienteController::class, 'destroy' ])->name('paciente.destroy');
 
+
+
+    Route::get('/atencion-paciente', [ AtencionPacienteController::class, 'index'])->name('atencionpaciente.index');
+    Route::post('/atencion-paciente', [ AtencionPacienteController::class, 'store'])->name('atencionpaciente.store');
 });
