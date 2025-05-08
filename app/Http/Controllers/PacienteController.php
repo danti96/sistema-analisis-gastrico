@@ -28,7 +28,7 @@ class PacienteController extends Controller
 
         if (!empty($search)) {
             $paginacion = $paginacion->orwhere(["apellidos" => $search, "nombres" => $search])
-                ->orwhere(DB::raw("LOWER(CONCAT(apellidos,' ' ',nombres))", 'like', '%' . strtolower($search) . '%'))
+                ->orwhere(DB::raw("LOWER(CONCAT(apellidos,' ',nombres))", 'like', '%' . strtolower($search) . '%'))
                 ->orwhere(["identificacion" => $search])
                 ->orwhere(["correo" => $search])
                 ->orwhere(["celular" => $search]);
