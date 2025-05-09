@@ -33,7 +33,7 @@ Route::middleware([
 
     Route::get('/paciente', [ PacienteController::class, 'index' ])->name('paciente.index');
 
-    Route::post('/paciente', [ PacienteController::class, 'store' ])->name('paciente .store');
+    Route::post('/paciente', [ PacienteController::class, 'store' ])->name('paciente.store');
 
     Route::get('/paciente/create', [ PacienteController::class, 'create' ])->name('paciente.create');
 
