@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AtencionPaciente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AtencionPacienteController extends Controller
 {
@@ -27,7 +29,24 @@ class AtencionPacienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = [
+                'paciente_id' => $request['paciente_id'],
+                'medico_id' => $request['medico_id'],
+                'motivoconsulta' => $request['motivoconsulta'],
+                'antecedentepersonales' => $request['antecedentepersonales'],
+                'antecedentefamiliares' => $request['antecedentefamiliares'],
+                'imagen_original' => $request['imagen_original'],
+                'imagen_procesada' => $request['imagen_procesada'],
+                'resultado_afectacion' => $request['resultado_afectacion'],
+                'porcentaje_afectacion' => $request['porcentaje_afectacion'],
+            ];
+            AtencionPaciente::create($data);
+            return response()->json(["message" => "Registro creado correctamente."]);
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return response()->json(["message" => "Error al crear registro."], 400);
+        }
     }
 
     /**
