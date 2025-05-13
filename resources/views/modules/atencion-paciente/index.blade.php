@@ -279,7 +279,7 @@
                         </button>
 
                         <template x-if="imagenanalisis !== null">
-                            <button type="button" @click="imagenanalisis=null"
+                            <button type="button" @click="imagenanalisis=null; processedImageAnalisis=null;"
                                 class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 focus:outline-none">
                                 <i class="fa-regular fa-floppy-disk"></i>
                                 Remover Imagen
@@ -321,7 +321,7 @@
                     <template x-if="resultImagenAnalisis">
                         <div class="p-2 w-2/4">
                             <template x-if="imagenanalisis !== null">
-                                <img class="h-auto max-w-lg rounded-lg" :src="processedImageAnalisis?.image" id="img-result-predictions" alt="Imagen obtenida">
+                                <img class="h-auto max-w-lg rounded-lg" :src="processedImageAnalisis.image" id="img-result-predictions" alt="Imagen obtenida">
                             </template>
                         </div>
                     </template>
