@@ -1,6 +1,8 @@
 @push('scripts')
     <script>
         const componentCreatePaciente = () => {
+            const atencionpaciente = JSON.parse(`{!! json_encode($paciente['atencionpaciente']) !!}`);
+
             return {
                 form: {
                     apellidos: `{{ $paciente['apellidos'] }}`,
@@ -15,14 +17,14 @@
                     ciudad: `{{ $paciente['ciudad'] }}`,
                     direccion: `{{ $paciente['direccion'] }}`,
                     fecha_nacimiento: `{{ $paciente['fecha_nacimiento'] }}`,
-                }
+                },
+                atencionpaciente: atencionpaciente
             };
         }
     </script>
 @endpush
 <x-app-layout>
     <div x-data="componentCreatePaciente()">
-
 
         <div class="bg-white shadow-sm rounded-md mb-2">
             <div class="border w-full p-2 flex justify-start">
@@ -119,7 +121,6 @@
                         </div>
                     </div>
 
-
                     <div class="bg-white my-2 border shadow-sm rounded-md">
                         <div class="px-2 w-full py-2">
                             <span class="text-gray-400 p-2">
@@ -128,6 +129,73 @@
                         </div>
                         <div class="p-2 md:grid md:grid-cols-5 items-center gap-3 w-full">
                             <x-components.input-group x-model="form.fecha_nacimiento" type="date" disabled="disabled" max="{{ date('Y-m-d') }}" name="fecha_nacimiento" label="Fecha de Nacimiento" placeholder="Fecha de Nacimiento"/>
+                        </div>
+                    </div>
+
+                    <div class="bg-white my-2 border shadow-sm rounded-md">
+                        <div class="px-2 w-full py-2">
+                            <span class="text-gray-400 p-2">
+                                Atencion Páciente
+                            </span>
+                        </div>
+                        <div class="p-2 items-center gap-3 w-full">
+
+                        <section class="bg-gray-50">
+                            <div class="w-full">
+                                <!-- Start coding here -->
+                                <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-sm text-left text-gray-500">
+                                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-4 text-center py-3">Motivo Consulta</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Ant. Personales</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Ant. Familiares</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Imagen Procesada</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Imagen Original</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Resultados</th>
+                                                    <th scope="col" class="px-4 text-center py-3">% Afectación</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template x-for="(item, idx) in atencionpaciente" :key="idx">
+                                                    <tr class="border-b dark:border-gray-700">
+                                                        <td class="px-4 py-3">
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.motivoconsulta"></span>
+                                                        </td>
+                                                        <td class="px-4 py-3">
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.antecedentepersonales"></span>
+                                                        </td>
+                                                        <td class="px-4 py-3">
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.antecedentefamiliares"></span>
+                                                        </td>
+                                                        <td class="px-4 py-3">
+                                                            <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
+                                                                x-bind:src="`{{ asset('storage') }}/${item.imagen_procesada}`">
+                                                                <i class="fa-solid fa-eye"></i>
+                                                            </a>
+                                                        </td>
+                                                        <th scope="row" class="px-4 py-3">
+                                                            <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
+                                                                x-bind:src="`{{ asset('storage') }}/${item.imagen_original}`">
+                                                                <i class="fa-solid fa-eye"></i>
+                                                            </a>
+                                                        </th>
+                                                        <td class="px-4 py-3">
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.resultado_afectacion"></span>
+                                                        </td>
+                                                        <td class="px-4 py-3 text-center"
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.porcentaje_afectacion"></span>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
                         </div>
                     </div>
 

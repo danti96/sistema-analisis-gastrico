@@ -40,7 +40,7 @@ class Pacientes extends Model
 
     public function getEdadAttribute()
     {
-        if(empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
+        if (empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
         $fechaNacimiento = Carbon::parse($this->fecha_nacimiento); // cambia por tu fecha
         $hoy = Carbon::now();
         $edad = $fechaNacimiento->diff($hoy);
@@ -48,18 +48,22 @@ class Pacientes extends Model
     }
     public function getMesesAttribute()
     {
-        if(empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
+        if (empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
         $fechaNacimiento = Carbon::parse($this->fecha_nacimiento); // cambia por tu fecha
         $hoy = Carbon::now();
         $edad = $fechaNacimiento->diff($hoy);
         return $edad->m;
     }
     public function getDiasAttribute()
-    {        if(empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
+    {
+        if (empty($this->fecha_nacimiento) || is_null($this->fecha_nacimiento)) return 0;
         $fechaNacimiento = Carbon::parse($this->fecha_nacimiento); // cambia por tu fecha
         $hoy = Carbon::now();
         $edad = $fechaNacimiento->diff($hoy);
         return $edad->d;
     }
 
+    public function atencionpaciente() {
+        return $this->hasMany(AtencionPaciente::class,'paciente_id','id');
+    }
 }

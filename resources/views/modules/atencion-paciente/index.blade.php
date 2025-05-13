@@ -20,6 +20,7 @@
                 resultImagenAnalisis: false,
                 blobFile: null,
                 processedImageAnalisis: {},
+                historialAnalisisImagen: [],
                 form: {
                     id: null,
                     apellidos: null,
@@ -42,6 +43,7 @@
                 },
                 pacienteSelect(d) {
                     this.form = d;
+                    this.historialAnalisisImagen = d.atencionpaciente
                     console.log(this.form)
                 },
                 init() {
@@ -79,7 +81,6 @@
                         })
                         .then(success)
                         .catch(failed);
-
                 },
                 fileChosen(event) {
                     if (!event.target.files.length) return;
@@ -264,69 +265,151 @@
 
             <div class="border">
 
-                <div class="p-2 w-full">
-                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900">
-                        Análisis Imagen
-                    </label>
-                </div>
 
-                <div class="flex justify-start">
-                    <div class="p-2">
-                        <button type="button" @click="analizarImagen()"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 focus:outline-none">
-                            <i class="fa-regular fa-floppy-disk"></i>
-                            Analizar Imagen
-                        </button>
-
-                        <template x-if="imagenanalisis !== null">
-                            <button type="button" @click="imagenanalisis=null; processedImageAnalisis=null;"
-                                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 focus:outline-none">
-                                <i class="fa-regular fa-floppy-disk"></i>
-                                Remover Imagen
+                <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                        <li class="me-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                Analisis Imagen
                             </button>
-                        </template>
-                    </div>
+                        </li>
+                        <li class="me-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">
+                                Historial
+                            </button>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="flex gap-2">
-                    <template x-if="imagenanalisis == null">
-                        <div class="p-2 w-1/4">
-                            <div class="flex items-center justify-center w-full">
-                                <label for="dropzone-file"
-                                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:border-gray-600">
-                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                            <path stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2"
-                                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                                        </svg>
-                                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
-                                                class="font-semibold">Click to upload</span> or drag and drop</p>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
-                                            800x400px)</p>
-                                    </div>
-                                    <input id="dropzone-file" type="file" class="hidden" accept="image/*"
-                                        @change="fileChosen">
-                                </label>
+                <div id="default-tab-content">
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                        <div class="p-2 w-full">
+                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900">
+                                Análisis Imagen
+                            </label>
+                        </div>
+
+                        <div class="flex justify-start">
+                            <div class="p-2">
+                                <button type="button" @click="analizarImagen()"
+                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 focus:outline-none">
+                                    <i class="fa-regular fa-floppy-disk"></i>
+                                    Analizar Imagen
+                                </button>
+
+                                <template x-if="imagenanalisis !== null">
+                                    <button type="button" @click="imagenanalisis=null; processedImageAnalisis=null;"
+                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 focus:outline-none">
+                                        <i class="fa-regular fa-floppy-disk"></i>
+                                        Remover Imagen
+                                    </button>
+                                </template>
                             </div>
                         </div>
-                    </template>
 
-                    <div class="p-2 w-2/4">
-                        <template x-if="imagenanalisis !== null">
-                            <img class="h-auto max-w-lg rounded-lg" :src="imagenanalisis" alt="image description">
-                        </template>
-                    </div>
-                    <template x-if="resultImagenAnalisis">
-                        <div class="p-2 w-2/4">
-                            <template x-if="imagenanalisis !== null">
-                                <img class="h-auto max-w-lg rounded-lg" :src="processedImageAnalisis.image" id="img-result-predictions" alt="Imagen obtenida">
+                        <div class="flex gap-2">
+                            <template x-if="imagenanalisis == null">
+                                <div class="p-2 w-1/4">
+                                    <div class="flex items-center justify-center w-full">
+                                        <label for="dropzone-file"
+                                            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:border-gray-600">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                </svg>
+                                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                                                        class="font-semibold">Click to upload</span> or drag and drop</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
+                                                    800x400px)</p>
+                                            </div>
+                                            <input id="dropzone-file" type="file" class="hidden" accept="image/*"
+                                                @change="fileChosen">
+                                        </label>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div class="p-2 w-2/4">
+                                <template x-if="imagenanalisis !== null">
+                                    <img class="h-auto max-w-lg rounded-lg" :src="imagenanalisis" alt="image description">
+                                </template>
+                            </div>
+                            <template x-if="resultImagenAnalisis">
+                                <div class="p-2 w-2/4">
+                                    <template x-if="imagenanalisis !== null">
+                                        <img class="h-auto max-w-lg rounded-lg" :src="processedImageAnalisis.image" id="img-result-predictions" alt="Imagen obtenida">
+                                    </template>
+                                </div>
                             </template>
                         </div>
-                    </template>
-                </div>
+                    </div>
 
+                    <div class="hidden p-4 rounded-lg bg-gray-50" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+
+                        <section class="bg-gray-50">
+                            <div class="w-full">
+                                <!-- Start coding here -->
+                                <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-sm text-left text-gray-500">
+                                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-4 text-center py-3">Motivo Consulta</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Ant. Personales</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Ant. Familiares</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Imagen Procesada</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Imagen Original</th>
+                                                    <th scope="col" class="px-4 text-center py-3">Resultados</th>
+                                                    <th scope="col" class="px-4 text-center py-3">% Afectación</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template x-for="(item, idx) in historialAnalisisImagen" :key="idx">
+                                                    <tr class="border-b dark:border-gray-700">
+                                                    <tr class="border-b dark:border-gray-700">
+                                                        <td class="px-4 py-3">
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.motivoconsulta"></span>
+                                                        </td>
+                                                        <td class="px-4 py-3">
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.antecedentepersonales"></span>
+                                                        </td>
+                                                        <td class="px-4 py-3">
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.antecedentefamiliares"></span>
+                                                        </td>
+                                                        <td class="px-4 py-3">
+                                                            <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
+                                                                x-bind:src="`{{ asset('storage') }}/${item.imagen_procesada}`">
+                                                                <i class="fa-solid fa-eye"></i>
+                                                            </a>
+                                                        </td>
+                                                        <th scope="row" class="px-4 py-3">
+                                                            <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
+                                                                x-bind:src="`{{ asset('storage') }}/${item.imagen_original}`">
+                                                                <i class="fa-solid fa-eye"></i>
+                                                            </a>
+                                                        </th>
+                                                        <td class="px-4 py-3">
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.resultado_afectacion"></span>
+                                                        </td>
+                                                        <td class="px-4 py-3 text-center"
+                                                            <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.porcentaje_afectacion"></span>
+                                                        </td>
+                                                    </tr>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
             </div>
             <div class="border">
 

@@ -88,7 +88,7 @@ class AtencionPacienteController extends Controller
         // Guardar el archivo en storage/app/$path
         Storage::put("$path/$filename", $fileData);
 
-        return "$path/$filename"; // Ruta del archivo guardado
+        return str_replace('public/','',$path)."/$filename"; // Ruta del archivo guardado
     }
     /**
      * Display the specified resource.

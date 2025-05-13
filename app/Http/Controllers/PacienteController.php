@@ -24,7 +24,7 @@ class PacienteController extends Controller
         $limit = $rq['limit'] ?? 10;
         $search = $rq['search'] ?? '';
 
-        $paginacion = Pacientes::orderByDesc('id');
+        $paginacion = Pacientes::with('atencionpaciente');
 
         if (!empty($search)) {
             $paginacion = $paginacion->orwhere(["apellidos" => $search, "nombres" => $search])
@@ -38,7 +38,7 @@ class PacienteController extends Controller
             }
         }
 
-        $paginacion = $paginacion->paginate($limit);
+        $paginacion = $paginacion->orderByDesc('id')->paginate($limit);
 
         return response()->json($paginacion);
     }
@@ -95,8 +95,7 @@ class PacienteController extends Controller
      */
     public function show(string $id)
     {
-        $paciente = Pacientes::find($id);
-
+        $paciente = Pacientes::with('atencionpaciente')->find($id);
         return view('modules.paciente.show', compact('paciente'));
     }
 
