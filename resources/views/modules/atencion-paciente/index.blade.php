@@ -132,10 +132,12 @@
                         Toast.warning('Imagen es requerido.');
                         return;
                     }
-                    if(this.processedImageAnalisis=={}) {
+
+                    if(this.processedImageAnalisis=={} || Object.values(this.processedImageAnalisis).length == 0) {
                         Toast.warning('Procesamiento de imagen es requerido.');
                         return;
                     }
+
 
                     const success = (e) => {
                         Toast.success("Registro creado correctamente.")
@@ -153,14 +155,16 @@
                     const route = `{{ route('atencionpaciente.store') }}`;
                     const formData = new FormData();
 
-                    formData.append('paciente', this.paciente)
+                    formData.append('paciente', this.form.id)
                     formData.append('motivoconsulta', this.motivoconsulta)
                     formData.append('antecedentepersonales', this.antecedentepersonales)
                     formData.append('antecedentefamiliares', this.antecedentefamiliares)
                     formData.append('imagenanalisis', this.imagenanalisis)
                     formData.append('resultImagenAnalisis', this.resultImagenAnalisis)
                     formData.append('blobFile', this.blobFile)
-                    formData.append('processedImageAnalisis', this.processedImageAnalisis)
+                    formData.append('processedImageAnalisis_image', this.processedImageAnalisis?.image)
+                    formData.append('processedImageAnalisis_text', this.processedImageAnalisis?.text)
+                    formData.append('processedImageAnalisis_pred', this.processedImageAnalisis?.pred.toFixed(2))
 
 
                     const headers = {
@@ -338,7 +342,7 @@
                                     name="procesamiento_resultado"
                                     id="procesamiento_resultado"
                                     rows="4"
-                                    x-model="processedImageAnalisis?.text"
+                                    x-model="processedImageAnalisis.text"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500  focus:border-blue-500"
                                     placeholder="Procesamiento de resultados"></textarea>
                             </div>
@@ -350,7 +354,7 @@
                                     name="procesamiento_afectacion"
                                     id="procesamiento_afectacion"
                                     rows="4"
-                                    x-model="processedImageAnalisis?.pred.toFixed(2)"
+                                    x-model="processedImageAnalisis.pred.toFixed(2)"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Ant% Afectación"></textarea>
                             </div>

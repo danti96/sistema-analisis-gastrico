@@ -127,8 +127,8 @@
                             <x-components.select-field x-model="form.sexo" name="sexo" label="Sexo"
                                 @input="removeError($event)"
                                 x-bind:class="{ 'border-red-500': submitted && !form.sexo }">
-                                <option value="Hombre" @selected(old('sexo', $paciente['sexo'] ?? '') == 'Hombre')>Hombre</option>
-                                <option value="Mujer" @selected(old('sexo', $paciente['sexo'] ?? '') == 'Mujer')>Mujer</option>
+                                <option value="Masculino" @selected(old('sexo', $paciente['sexo'] ?? '') == 'Masculino')>Masculino</option>
+                                <option value="Femenino" @selected(old('sexo', $paciente['sexo'] ?? '') == 'Femenino')>Femenino</option>
                                 <option value="Otros" @selected(old('sexo', $paciente['sexo'] ?? '') == 'Otros')>Otros</option>
                             </x-components.select-field>
 
