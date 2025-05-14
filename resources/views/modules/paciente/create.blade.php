@@ -42,7 +42,7 @@
                     if (this.formDataIsEmpty()) return;
 
                     const success = (e) => {
-                        Toast.success('A toast without a title also works');
+                        Toast.success('Usuario creado correctamente');
                         this.message = {status: e?.status, message: 'Formulario enviado correctamente ✅'};
                         setTimeout(() => location.reload(), 5000);
                     }

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pacientes;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class PacienteController extends Controller
@@ -81,6 +83,12 @@ class PacienteController extends Controller
             }
 
             $paciente = Pacientes::create($paciente);
+
+            User::create([
+                'name'=> $paciente['fullname'],
+                'email'=> $paciente['correo'],
+                'password'=> Hash::make($paciente['identificacion']),
+            ]);
 
             return response()->json(["message" => "Paciente registrado correctamente."]);
 

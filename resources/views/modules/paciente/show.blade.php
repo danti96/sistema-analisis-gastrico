@@ -171,13 +171,13 @@
                                                         </td>
                                                         <td class="px-4 py-3">
                                                             <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
-                                                                x-bind:src="`{{ asset('storage') }}/${item.imagen_procesada}`">
+                                                                x-bind:href="`{{ asset('storage') }}/${item.imagen_procesada}`">
                                                                 <i class="fa-solid fa-eye"></i>
                                                             </a>
                                                         </td>
                                                         <th scope="row" class="px-4 py-3">
                                                             <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
-                                                                x-bind:src="`{{ asset('storage') }}/${item.imagen_original}`">
+                                                                x-bind:href="`{{ asset('storage') }}/${item.imagen_original}`">
                                                                 <i class="fa-solid fa-eye"></i>
                                                             </a>
                                                         </th>

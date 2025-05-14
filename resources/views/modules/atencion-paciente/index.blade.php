@@ -43,8 +43,7 @@
                 },
                 pacienteSelect(d) {
                     this.form = d;
-                    this.historialAnalisisImagen = d.atencionpaciente
-                    console.log(this.form)
+                    this.historialAnalisisImagen = d.atencionpaciente;
                 },
                 init() {
                     this.paginate();
@@ -349,7 +348,6 @@
                     </div>
 
                     <div class="hidden p-4 rounded-lg bg-gray-50" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-
                         <section class="bg-gray-50">
                             <div class="w-full">
                                 <!-- Start coding here -->
@@ -370,7 +368,6 @@
                                             <tbody>
                                                 <template x-for="(item, idx) in historialAnalisisImagen" :key="idx">
                                                     <tr class="border-b dark:border-gray-700">
-                                                    <tr class="border-b dark:border-gray-700">
                                                         <td class="px-4 py-3">
                                                             <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.motivoconsulta"></span>
                                                         </td>
@@ -381,16 +378,20 @@
                                                             <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.antecedentefamiliares"></span>
                                                         </td>
                                                         <td class="px-4 py-3">
-                                                            <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
-                                                                x-bind:src="`{{ asset('storage') }}/${item.imagen_procesada}`">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
+                                                            <div class="flex justify-center">
+                                                                <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center hover:font-bold px-2 py-1 rounded-lg text-blue-500 hover:bg-blue-500 hover:text-white"
+                                                                    x-bind:href="`{{ asset('storage') }}/${item.imagen_procesada}`">
+                                                                    <i class="fa-solid fa-eye"></i>
+                                                                </a>
+                                                            </div>
                                                         </td>
                                                         <th scope="row" class="px-4 py-3">
-                                                            <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
-                                                                x-bind:src="`{{ asset('storage') }}/${item.imagen_original}`">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
+                                                            <div class="flex justify-center">
+                                                                <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center hover:font-bold px-2 py-1 rounded-lg text-blue-500 hover:bg-blue-500 hover:text-white"
+                                                                    x-bind:href="`{{ asset('storage') }}/${item.imagen_original}`">
+                                                                    <i class="fa-solid fa-eye"></i>
+                                                                </a>
+                                                            </div>
                                                         </th>
                                                         <td class="px-4 py-3">
                                                             <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.resultado_afectacion"></span>
@@ -398,7 +399,6 @@
                                                         <td class="px-4 py-3 text-center"
                                                             <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.porcentaje_afectacion"></span>
                                                         </td>
-                                                    </tr>
                                                     </tr>
                                                 </template>
                                             </tbody>
