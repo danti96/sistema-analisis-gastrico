@@ -1,69 +1,29 @@
 <x-app-layout>
     <div x-data="{
-        tab: 0,
-        message: {status: 200, message: ''},
+        message: { status: 200, message: '' },
         enabledButton: true,
         submitted: false,
-        required: {
-            0: [
-                'p_nombre',
-                'p_apellido',
-                'estado_civil',
-                'sexo',
-                'tipo_identificacion',
-                'identificacion',
-            ],
-            3: [
-                'nivel_educacion',
-                'estado_nivel_educacion',
-                'seguro_iess',
-                'seguro_privado',
-                'discapacidad',
-            ]
+        form: {
+            apellidos: `{{ $paciente['apellidos'] }}`,
+            nombres: `{{ $paciente['nombres'] }}`,
+            estado_civil: `{{ $paciente['estado_civil'] }}`,
+            sexo: `{{ $paciente['sexo'] }}`,
+            tipo_identificacion: `{{ $paciente['tipo_identificacion'] }}`,
+            identificacion: `{{ $paciente['identificacion'] }}`,
+            correo: `{{ $paciente['correo'] }}`,
+            celular: `{{ $paciente['celular'] }}`,
+            direccion: `{{ $paciente['direccion'] }}`,
+            fecha_nacimiento: `{{ $paciente['fecha_nacimiento'] }}`,
         },
-        formatData() {
-            const data = {};
-            const inputs = event.target.querySelectorAll('input, select, textarea');
-            inputs.forEach(input => {
-                if (!input.name) return;
-                // Detecta si es nombre tipo familiares[f_p_nombre]
-                const match = input.name.match(/^([^\[]+)\[([^\]]+)\]$/);
-                if (match) {
-                    const parentKey = match[1]; // ejemplo: 'familiares'
-                    const childKey = match[2]; // ejemplo: 'f_p_nombre'
-                    // Asegura que data[parentKey] es un objeto
-                    if (!data[parentKey]) {
-                        data[parentKey] = {};
-                    }
-                    data[parentKey][childKey] = input.value;
-                } else {
-                    data[input.name] = input.value;
-                }
-            });
-            return data;
-        },
-        validate(data) {
-            this.submitted = true;
-            for (const tab of Object.keys(this.required)) {
-                const missingFields = this.required[tab].filter(key => !data[key] || data[key].trim() === '');
-                if (missingFields.length > 0) {
-                    // Marcar con borde rojo los inputs vacíos
-                    focus = false;
-                    missingFields.forEach(key => {
-                        const input = document.getElementById(key);
-                        if (input) {
-                            if (!focus) {
-                                input.focus();
-                                focus = true;
-                                this.tab = Number(tab);
-                            }
-                            input.classList.add('border-red-500');
-                        }
-                    });
-                    return false;
-                }
+        removeError(event) {
+            if (!this.submitted) return;
+            const input = event.target;
+            if (input.value.trim() !== '') {
+                input.classList.remove('border-red-500');
             }
-            return true;
+        },
+        formDataIsEmpty() {
+            return Object.values(this.form).filter((r) => r === '').length > 0;
         },
         removeError(event) {
             if (!this.submitted) return;
@@ -73,41 +33,41 @@
             }
         },
         store() {
-            this.message.message = '';
-            const data = this.formatData();
+            this.submitted = true;
+            this.message = {
+                status: null,
+                message: ''
+            };
 
-            if (!this.validate(data)) return;
+            if (this.formDataIsEmpty()) return;
 
             const success = (e) => {
-                this.message.status = e?.status;
-                this.message.message = 'Formulario enviado correctamente ✅';
-                Toast.success(e?.data?.message);
+                Toast.success('Usuario Actualizado correctamente');
+                this.message = { status: e?.status, message: 'Formulario enviado correctamente ✅' };
                 setTimeout(() => location.reload(), 5000);
             }
 
             const failed = (e) => {
-                this.message.status = e?.response?.status;
-                console.log(e?.response?.status)
                 if (e.response?.data?.errors || e.response?.data?.message) {
                     // Puedes mostrar los errores específicos aquí
-                        this.message.message = e.response?.data?.message;
+                    this.message = { status: 500, message: e.response?.data?.message };
                     Toast.warning(this.message.message);
                 } else {
-                    this.message = 'Error al enviar el formulario ❌';
-                    Toast.warning(this.message);
+                    this.message = { status: 400, message: 'Error al enviar el formulario ❌' };
+                    Toast.warning(this.message.message);
                 }
             }
 
             const route = `{{ route('paciente.update', ['paciente' => $id]) }}`;
-            axios.put(route, data).then(success).catch(failed);
+            axios.put(route, this.form).then(success).catch(failed);
         }
-    }" x-init="tab = 0">
-        <form action="" method="post" @submit.prevent="store">
+    }">
+        <form @submit.prevent="store">
             @csrf
             <div class="bg-white shadow-sm rounded-md">
                 <div class="border w-full p-2 flex justify-between">
                     <div class="p-2 w-full bg-blue-300 cursor-pointer">
-                        <span class="font-bold underline decoration-solid"> Registro De Paciente </span>
+                        <span class="font-bold underline decoration-solid"> Actualizar Paciente </span>
                     </div>
                 </div>
                 <div class="border w-full p-2 flex justify-start">
@@ -124,47 +84,107 @@
                 </div>
                 <template x-if="message.message!=''">
                     <div class="border w-full p-2 flex justify-between">
-                        <div class="p-2 w-full cursor-pointer" :class="message.status == 200? 'bg-green-300':'bg-red-300'">
+                        <div class="p-2 w-full cursor-pointer"
+                            :class="message.status == 200 ? 'bg-green-300' : 'bg-red-300'">
                             <span class="font-bold underline decoration-solid" x-text="message.message"></span>
                         </div>
                     </div>
                 </template>
             </div>
-            <div class="bg-white my-2 border shadow-sm rounded-md">
-                <div class="px-2">
-                    <button :class="tab == 0 ? 'bg-blue-400 font-semibold' : ''" @click="tab=0" type="button"
-                        class="p-2 bg-blue-300 rounded-t-md hover:bg-blue-400 hover:font-semibold">
-                        Datos Personales</button>
-                    <button :class="tab == 1 ? 'bg-blue-400 font-semibold' : ''" @click="tab=1" type="button"
-                        class="p-2 bg-blue-300 rounded-t-md hover:bg-blue-400 hover:font-semibold">
-                        Datos Nacimiento</button>
-                    <button :class="tab == 2 ? 'bg-blue-400 font-semibold' : ''" @click="tab=2" type="button"
-                        class="p-2 bg-blue-300 rounded-t-md hover:bg-blue-400 hover:font-semibold">
-                        Datos Familiares</button>
-                    <button :class="tab == 3 ? 'bg-blue-400 font-semibold' : ''" @click="tab=3" type="button"
-                        class="p-2 bg-blue-300 rounded-t-md hover:bg-blue-400 hover:font-semibold">
-                        Datos Adicionales</button>
-                </div>
-            </div>
-            <div class="max-h-full p-2 border rounded-md w-full">
-                <div x-show="tab === 0">
-                    <x-modules.paciente.forms.datos-personales :paciente="$paciente" :disabled="false"
-                        :tipo_identificacion="$tipo_identificacion" :grupos_familiares="$grupos_familiares" :nivel_educacion="$nivel_educacion" :estado_civil="$estado_civil" :sexo="$sexo" />
-                </div>
-                <div x-show="tab === 1">
-                    <x-modules.paciente.forms.datos-nacimientos :paciente="$paciente" :disabled="false"
-                        :countries='$countries' />
-                </div>
-                <div x-show="tab === 2">
-                    <x-modules.paciente.forms.datos-familiar :paciente="$paciente" :disabled="false"
-                        :tipo_identificacion="$tipo_identificacion" :grupos_familiares="$grupos_familiares" :sexo="$sexo" />
-                </div>
-                <div x-show="tab === 3">
-                    <x-modules.paciente.forms.datos-adicionales :paciente="$paciente" :disabled="false"
-                        :nivel_educacion="$nivel_educacion" :estado_nivel_educacion="$estado_nivel_educacion" />
-                </div>
-            </div>
 
+            <div class="bg-white my-2 border shadow-sm rounded-md">
+
+                <div class="max-h-full p-2 border rounded-md w-full">
+                    <div class="bg-white my-2 border shadow-sm rounded-md">
+                        <div class="px-2 w-full py-2">
+                            <span class="text-gray-400 p-2">
+                                <i class="fa-light fa-house"></i>
+                                Datos Personales
+                            </span>
+                        </div>
+                        <div class="p-2 md:grid md:grid-cols-5 items-center gap-3 w-full">
+
+                            <x-components.input-group x-model="form.apellidos" name="apellidos" label="Apellidos"
+                                placeholder="Apellidos" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.apellidos }" />
+
+                            <x-components.input-group x-model="form.nombres" name="nombres" label="Nombres"
+                                placeholder="Nombres" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.nombres }" />
+
+
+                            <x-components.select-field x-model="form.estado_civil" name="estado_civil"
+                                label="Estado Civil" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.estado_civil }">
+                                <option value="Soltero/a" @selected(old('estado_civil', $paciente['estado_civil'] ?? '') == 'Soltero/a')>Soltero/a</option>
+                                <option value="Casado/a" @selected(old('estado_civil', $paciente['estado_civil'] ?? '') == 'Casado/a')>Casado/a</option>
+                                <option value="Divorciado/a" @selected(old('estado_civil', $paciente['estado_civil'] ?? '') == 'Divorciado/a')>Divorciado/a</option>
+                                <option value="Union Libre" @selected(old('estado_civil', $paciente['estado_civil'] ?? '') == 'Union Libre')>Union Libre</option>
+                                <option value="Otros" @selected(old('estado_civil', $paciente['estado_civil'] ?? '') == 'Otros')>Otros</option>
+                            </x-components.select-field>
+
+                            <x-components.select-field x-model="form.sexo" name="sexo" label="Sexo"
+                                @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.sexo }">
+                                <option value="Masculino" @selected(old('sexo', $paciente['sexo'] ?? '') == 'Masculino')>Masculino</option>
+                                <option value="Femenino" @selected(old('sexo', $paciente['sexo'] ?? '') == 'Femenino')>Femenino</option>
+                                <option value="Otros" @selected(old('sexo', $paciente['sexo'] ?? '') == 'Otros')>Otros</option>
+                            </x-components.select-field>
+
+                            <x-components.select-field x-model="form.tipo_identificacion" name="tipo_identificacion"
+                                label="Tipo Identificación" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.tipo_identificacion }">
+                                <option value="Cédula" @selected(old('tipo_identificacion', $paciente['tipo_identificacion'] ?? '') === 'Cédula')>Cédula</option>
+                                <option value="Ruc" @selected(old('tipo_identificacion', $paciente['tipo_identificacion'] ?? '') === 'Ruc')>Ruc</option>
+                                <option value="Pasaporte" @selected(old('tipo_identificacion', $paciente['tipo_identificacion'] ?? '') === 'Pasaporte')>Pasaporte</option>
+                            </x-components.select-field>
+
+                            <x-components.input-group x-model="form.identificacion" name="identificacion"
+                                label="Identificación" placeholder="Identificación" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.identificacion }" />
+
+                            <x-components.input-group x-model="form.correo" name="correo" label="Correo"
+                                placeholder="example@dominio.com" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.correo }" />
+
+                            <x-components.input-group x-model="form.celular" name="celular" label="Celular"
+                                placeholder="09 #### ####" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.celular }" />
+
+                        </div>
+                    </div>
+
+                    <div class="bg-white my-2 border shadow-sm rounded-md">
+                        <div class="px-2 w-full py-2">
+                            <span class="text-gray-400 p-2">
+                                Datos de Residencia
+                            </span>
+                        </div>
+                        <div class="p-2 md:grid md:grid-cols-5 items-center gap-3 w-full">
+                            <x-components.input-group x-model="form.direccion" name="direccion" label="Dirección"
+                                placeholder="Dirección" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.direccion }" />
+                        </div>
+                    </div>
+
+
+                    <div class="bg-white my-2 border shadow-sm rounded-md">
+                        <div class="px-2 w-full py-2">
+                            <span class="text-gray-400 p-2">
+                                Datos de Nacimiento
+                            </span>
+                        </div>
+                        <div class="p-2 md:grid md:grid-cols-5 items-center gap-3 w-full">
+                            <x-components.input-group x-model="form.fecha_nacimiento" type="date"
+                                max="{{ date('Y-m-d') }}" name="fecha_nacimiento" label="Fecha de Nacimiento"
+                                placeholder="Fecha de Nacimiento" @input="removeError($event)"
+                                x-bind:class="{ 'border-red-500': submitted && !form.fecha_nacimiento }" />
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
         </form>
     </div>
 </x-app-layout>

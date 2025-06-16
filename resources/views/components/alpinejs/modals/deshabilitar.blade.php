@@ -50,7 +50,14 @@ x-on:keydown.escape.prevent.stop="open = false">
                                 d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                            ¿Está seguro que desea deshabilitar este registro?
+                            ¿Está seguro que desea
+                            <template x-if="item.status!=1">
+                                <span class="text-blue-500 font-bold">Habilitar</span>
+                            </template>
+                            <template x-if="item.status!=0">
+                                <span class="text-blue-500 font-bold">Deshabilitar</span>
+                            </template>
+                            este registro?
                         </h3>
                         <button type="button" @click="remove()" :disabled="disabled"
                             class="inline-flex items-center px-4 py-2 font-medium text-xs leading-tight rounded shadow-md hover:shadow-lg

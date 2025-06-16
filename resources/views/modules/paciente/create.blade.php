@@ -17,8 +17,6 @@
                     identificacion: '',
                     correo: '',
                     celular: '',
-                    region: '',
-                    ciudad: '',
                     direccion: '',
                     fecha_nacimiento: '',
                 },
@@ -162,14 +160,6 @@
                             </span>
                         </div>
                         <div class="p-2 md:grid md:grid-cols-5 items-center gap-3 w-full">
-                            <x-components.input-group x-model="form.region" name="region" label="Región/Provincia"
-                                placeholder="Región/Provincia" @input="removeError($event)"
-                                x-bind:class="{ 'border-red-500': submitted && !form.region }" />
-
-                            <x-components.input-group x-model="form.ciudad" name="ciudad" label="Ciudad"
-                                placeholder="Ciudad" @input="removeError($event)"
-                                x-bind:class="{ 'border-red-500': submitted && !form.ciudad }" />
-
                             <x-components.input-group x-model="form.direccion" name="direccion" label="Dirección"
                                 placeholder="Dirección" @input="removeError($event)"
                                 x-bind:class="{ 'border-red-500': submitted && !form.direccion }" />

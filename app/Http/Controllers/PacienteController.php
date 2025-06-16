@@ -32,7 +32,7 @@ class PacienteController extends Controller
             $paginacion = $paginacion->orwhere(["apellidos" => $search, "nombres" => $search])
                 ->orwhere(DB::raw("LOWER(CONCAT(apellidos,' ',nombres))", 'like', '%' . strtolower($search) . '%'))
                 ->orwhere(["identificacion" => $search])
-                ->orwhere(["correo" => $search])
+                ->orwhere("correo", "like", $search . "%")
                 ->orwhere(["celular" => $search]);
 
             if (strtotime($search) !== false) {
@@ -85,13 +85,12 @@ class PacienteController extends Controller
             $paciente = Pacientes::create($paciente);
 
             User::create([
-                'name'=> $paciente['fullname'],
-                'email'=> $paciente['correo'],
-                'password'=> Hash::make($paciente['identificacion']),
+                'name' => $paciente['fullname'],
+                'email' => $paciente['correo'],
+                'password' => Hash::make($paciente['identificacion']),
             ]);
 
             return response()->json(["message" => "Paciente registrado correctamente."]);
-
         } catch (\Throwable $th) {
             Log::error(json_encode(["file" => "PacienteController", "line" => $th->getLine(), "error" => $th->getMessage()]));
             return response()->json(["message" => "Error crear un nuevo registro."], 500);
@@ -112,7 +111,7 @@ class PacienteController extends Controller
      */
     public function edit(string $id)
     {
-        $paciente = Pacientes::find($id);
+        $paciente = Pacientes::with('atencionpaciente')->find($id);
 
         return view('modules.paciente.edit', compact('id', 'paciente'));
     }
@@ -134,7 +133,6 @@ class PacienteController extends Controller
             "correo" => $request["correo"],
             "celular" => $request["celular"],
             "direccion" => $request["direccion"],
-            "status" => $request["status"],
         ];
         $filter = [
             "identificacion" => $paciente["identificacion"],

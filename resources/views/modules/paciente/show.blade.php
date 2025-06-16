@@ -13,8 +13,6 @@
                     identificacion: `{{ $paciente['identificacion'] }}`,
                     correo: `{{ $paciente['correo'] }}`,
                     celular: `{{ $paciente['celular'] }}`,
-                    region: `{{ $paciente['region'] }}`,
-                    ciudad: `{{ $paciente['ciudad'] }}`,
                     direccion: `{{ $paciente['direccion'] }}`,
                     fecha_nacimiento: `{{ $paciente['fecha_nacimiento'] }}`,
                 },
@@ -113,10 +111,6 @@
                             </span>
                         </div>
                         <div class="p-2 md:grid md:grid-cols-5 items-center gap-3 w-full">
-                            <x-components.input-group x-model="form.region" name="region" label="Región/Provincia" disabled="disabled" placeholder="Región/Provincia"/>
-
-                            <x-components.input-group x-model="form.ciudad" name="ciudad" label="Ciudad" disabled="disabled" placeholder="Ciudad"/>
-
                             <x-components.input-group x-model="form.direccion" name="direccion" label="Dirección" disabled="disabled" placeholder="Dirección"/>
                         </div>
                     </div>

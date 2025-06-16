@@ -39,7 +39,9 @@ Route::middleware([
 
     Route::get('/paciente/show/{id}', [ PacienteController::class, 'show' ])->name('paciente.show');
 
-    Route::put('/paciente.edit', [ PacienteController::class, 'edit' ])->name('paciente.edit');
+    Route::get('/paciente/edit/{id}', [ PacienteController::class, 'edit' ])->name('paciente.edit');
+
+    Route::put('/paciente/edit/{paciente}', [ PacienteController::class, 'update' ])->name('paciente.update');
 
     Route::get('/paciente/paginate', [ PacienteController::class, 'paginate' ])->name('paciente.paginate');
 
