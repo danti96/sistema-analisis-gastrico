@@ -7,7 +7,7 @@
             <div class="text-center">
                 <p class="text-lg text-gray-700 leading-relaxed">
                     Nuestro sistema usa <span class="font-semibold text-blue-500">inteligencia artificial</span> y el
-                    algoritmo <span class="font-semibold text-blue-500">YOLOv8</span> para detectar posibles indicios de
+                    <span class="font-semibold text-blue-500">Modelo H5</span> para detectar posibles indicios de
                     <span class="font-semibold">cáncer gástrico</span> en imágenes médicas.
                 </p>
                 <p class="mt-4 text-lg text-gray-700 leading-relaxed">
@@ -28,3 +28,4 @@
             </div>
         </div>
     </div>
+la verdad que no recuerdo bien que modelo bien pero efue el ultimo que me dijiste

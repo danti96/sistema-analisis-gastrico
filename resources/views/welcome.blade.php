@@ -421,9 +421,9 @@
                             <div class="p-12 rounded-lg border border-solid border-gray-200 mb-8"
                                 style="box-shadow:0 10px 28px rgba(0,0,0,.08)">
                                 <p class="font-semibold text-xl">
-                                    🔍 Sistema de Detección con Algoritmo YOLO
+                                    🔍 Sistema de Detección con el Modelo H5
                                 </p>
-                                <p class="mt-4">Nuestro sistema utiliza YOLOv8, uno de los algoritmos más avanzados de detección de objetos en tiempo real, para identificar posibles anomalías en imágenes gástricas.
+                                <p class="mt-4">Nuestro sistema utiliza Modelo H5, uno de los algoritmos más avanzados de detección de objetos en tiempo real, para identificar posibles anomalías en imágenes gástricas.
                                 </p>
                             </div>
                         </div>
@@ -457,8 +457,8 @@
                 <div class="container mx-auto px-16 items-center flex flex-col lg:flex-row">
                     <div class="lg:w-1/2">
                         <div class="lg:pr-32 xl:pr-48">
-                            <h3 class="text-3xl font-semibold leading-tight">Detección Gástrica con IA y YOLOv8</h3>
-                            <p class="mt-8 text-xl font-light leading-relaxed">Nuestro sistema usa inteligencia artificial y el algoritmo YOLOv8 para detectar posibles indicios de cáncer gástrico en imágenes médicas. Este análisis automático facilita una detección temprana y precisa, apoyando al diagnóstico clínico y mejorando las oportunidades de tratamiento.
+                            <h3 class="text-3xl font-semibold leading-tight">Detección Gástrica con IA y Modelo H5</h3>
+                            <p class="mt-8 text-xl font-light leading-relaxed">Nuestro sistema usa inteligencia artificial y el Modelo H5 para detectar posibles indicios de cáncer gástrico en imágenes médicas. Este análisis automático facilita una detección temprana y precisa, apoyando al diagnóstico clínico y mejorando las oportunidades de tratamiento.
                             </p>
                         </div>
                     </div>
