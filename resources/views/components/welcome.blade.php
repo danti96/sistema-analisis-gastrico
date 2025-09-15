@@ -28,4 +28,3 @@
             </div>
         </div>
     </div>
-la verdad que no recuerdo bien que modelo bien pero efue el ultimo que me dijiste
