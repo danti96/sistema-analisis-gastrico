@@ -6,6 +6,9 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,20 +23,25 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    if (auth()->check() && (auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Medico'))) {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+    } else {
+        Route::get('/dashboard', [PacienteController::class, 'dashboardpaciente'])->name('dashboard');
+    }
+});
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'role:Administrador|Medico'])->group(function () {
+
+    Route::get('/paciente/show/{id}', [PacienteController::class, 'show'])->name('paciente.show');
+
+    Route::get('/paciente/paginate', [PacienteController::class, 'paginate'])->name('paciente.paginate');
+});
 
 
-
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'role:Administrador|Medico'])->group(function () {
 
     Route::get('/paciente', [PacienteController::class, 'index'])->name('paciente.index');
 
@@ -60,8 +68,6 @@ Route::middleware([
 
 
 
-
-use App\Http\Controllers\UserController;
 
 Route::resource('roles', RoleController::class)->middleware(['auth:sanctum',    config('jetstream.auth_session'),    'verified']);
 Route::resource('permissions', PermissionController::class)->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);

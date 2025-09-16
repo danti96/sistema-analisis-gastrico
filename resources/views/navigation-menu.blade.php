@@ -15,12 +15,15 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('paciente.index') }}" :active="request()->routeIs('paciente.*')">
-                        Paciente
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('atencionpaciente.index') }}" :active="request()->routeIs('atencionpaciente.*')">
-                        Atención Paciente
-                    </x-nav-link>
+                    @if(auth()->check() && (auth()->user()->hasRole('Medico') || auth()->user()->hasRole('Administrador')))
+                        <x-nav-link href="{{ route('paciente.index') }}" :active="request()->routeIs('paciente.*')">
+                            Paciente
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('atencionpaciente.index') }}" :active="request()->routeIs('atencionpaciente.*')">
+                            Atención Paciente
+                        </x-nav-link>
+                    @endif
+
                 </div>
             </div>
 

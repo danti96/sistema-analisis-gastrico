@@ -82,14 +82,18 @@ class PacienteController extends Controller
                 return response()->json(["message" => "Paciente con " . $request["tipo_identificacion"] . " " . $paciente["identificacion"] . " ya se encuentra registrado"], 422);
             }
 
-            $paciente = Pacientes::create($paciente);
+            $paciente = Pacientes::create($paciente)->fresh();
 
-            User::create([
-                'name' => trim($paciente['fullname']),
-                'email' => trim($paciente['correo']),
-                'password' => Hash::make(trim($paciente['identificacion'])),
-                'tipo' => 'paciente'
+            $user = User::create([
+                'name' => trim($paciente->fullname),
+                'email' => trim($paciente->correo),
+                'password' => Hash::make(trim($paciente->identificacion)),
+                'tipo' => 'paciente',
+                'paciente_id' => $paciente->id
             ]);
+
+            $user->assignRole('Paciente');
+
 
             return response()->json(["message" => "Paciente registrado correctamente."]);
         } catch (\Throwable $th) {
@@ -178,5 +182,20 @@ class PacienteController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function dashboardpaciente()
+    {
+
+        $paciente_id  = auth()->user()->paciente_id;
+
+        $paciente = Pacientes::with('atencionpaciente')->find($paciente_id);
+
+        return view('modules.paciente.show', compact('paciente'));
     }
 }

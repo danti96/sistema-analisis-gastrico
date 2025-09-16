@@ -2,7 +2,7 @@
     <script>
         const componentCreatePaciente = () => {
             const atencionpaciente = JSON.parse(`{!! json_encode($paciente['atencionpaciente']) !!}`);
-
+            console.log(atencionpaciente)
             return {
                 form: {
                     apellidos: `{{ $paciente['apellidos'] }}`,
@@ -23,7 +23,7 @@
 @endpush
 <x-app-layout>
     <div x-data="componentCreatePaciente()">
-
+        @if(auth()->check() && (auth()->user()->hasRole('Medico') || auth()->user()->hasRole('Administrador')))
         <div class="bg-white shadow-sm rounded-md mb-2">
             <div class="border w-full p-2 flex justify-start">
                 <a type="button" href="{{ route('paciente.index') }}"
@@ -33,7 +33,7 @@
                 </a>
             </div>
         </div>
-
+        @endif
         <div class="sm:flex gap-4 w-full p-4">
 
             <div class="max-w-md h-full grid">
@@ -183,6 +183,16 @@
                                                         </td>
                                                     </tr>
                                                 </template>
+                                                <template x-if="atencionpaciente.length === 0">
+                                                    <tr>
+                                                        <td colspan="7">
+                                                            <div class="text-xl bg-gray-500 w-full flex justify-center items-center text-white">
+                                                                Sin registros de atención
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+
                                             </tbody>
                                         </table>
                                     </div>
