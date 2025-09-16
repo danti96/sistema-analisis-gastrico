@@ -39,7 +39,7 @@
             <div class="max-w-md h-full grid">
                 <div class="rounded-lg bg-white space-y-2 p-2">
                     <div class="hidden sm:block w-full">
-                        <img src="{{ asset('/storage/images/user-profile.jpg') }}" alt="Profile Patient"
+                        <img src="{{ asset('/images/user-profile.jpg') }}" alt="Profile Patient"
                             class="border rounded-lg max-h-64 w-full">
                     </div>
 
@@ -163,18 +163,18 @@
                                                         <td class="px-4 py-3">
                                                             <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.antecedentefamiliares"></span>
                                                         </td>
-                                                        <td class="px-4 py-3">
-                                                            <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
-                                                                x-bind:href="`{{ asset('storage') }}/${item.imagen_procesada}`">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </a>
-                                                        </td>
                                                         <th scope="row" class="px-4 py-3">
                                                             <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
                                                                 x-bind:href="`{{ asset('storage') }}/${item.imagen_original}`">
                                                                 <i class="fa-solid fa-eye"></i>
                                                             </a>
                                                         </th>
+                                                        <td class="px-4 py-3">
+                                                            <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center w-full flex justify-center hover:font-bold px-2 text-blue-500"
+                                                                x-bind:href="`{{ asset('storage') }}/${item.imagen_procesada}`">
+                                                                <i class="fa-solid fa-eye"></i>
+                                                            </a>
+                                                        </td>
                                                         <td class="px-4 py-3">
                                                             <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.resultado_afectacion"></span>
                                                         </td>

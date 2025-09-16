@@ -389,14 +389,6 @@
                                                         <td class="px-4 py-3">
                                                             <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.antecedentefamiliares"></span>
                                                         </td>
-                                                        <td class="px-4 py-3">
-                                                            <div class="flex justify-center">
-                                                                <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center hover:font-bold px-2 py-1 rounded-lg text-blue-500 hover:bg-blue-500 hover:text-white"
-                                                                    x-bind:href="`{{ asset('storage') }}/${item.imagen_procesada}`">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
                                                         <th scope="row" class="px-4 py-3">
                                                             <div class="flex justify-center">
                                                                 <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center hover:font-bold px-2 py-1 rounded-lg text-blue-500 hover:bg-blue-500 hover:text-white"
@@ -405,6 +397,14 @@
                                                                 </a>
                                                             </div>
                                                         </th>
+                                                        <td class="px-4 py-3">
+                                                            <div class="flex justify-center">
+                                                                <a target="_blank" class="font-medium whitespace-nowrap cursor-pointer text-center hover:font-bold px-2 py-1 rounded-lg text-blue-500 hover:bg-blue-500 hover:text-white"
+                                                                    x-bind:href="`{{ asset('storage') }}/${item.imagen_procesada}`">
+                                                                    <i class="fa-solid fa-eye"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
                                                         <td class="px-4 py-3">
                                                             <span class="font-medium text-gray-900 whitespace-nowrap" x-text="item.resultado_afectacion"></span>
                                                         </td>
