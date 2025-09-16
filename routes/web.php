@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AtencionPacienteController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,36 +21,53 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
 
-
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
 
-    Route::get('/paciente', [ PacienteController::class, 'index' ])->name('paciente.index');
+    Route::get('/paciente', [PacienteController::class, 'index'])->name('paciente.index');
 
-    Route::post('/paciente', [ PacienteController::class, 'store' ])->name('paciente.store');
+    Route::post('/paciente', [PacienteController::class, 'store'])->name('paciente.store');
 
-    Route::get('/paciente/create', [ PacienteController::class, 'create' ])->name('paciente.create');
+    Route::get('/paciente/create', [PacienteController::class, 'create'])->name('paciente.create');
 
-    Route::get('/paciente/show/{id}', [ PacienteController::class, 'show' ])->name('paciente.show');
+    Route::get('/paciente/show/{id}', [PacienteController::class, 'show'])->name('paciente.show');
 
-    Route::get('/paciente/edit/{id}', [ PacienteController::class, 'edit' ])->name('paciente.edit');
+    Route::get('/paciente/edit/{id}', [PacienteController::class, 'edit'])->name('paciente.edit');
 
-    Route::put('/paciente/edit/{paciente}', [ PacienteController::class, 'update' ])->name('paciente.update');
+    Route::put('/paciente/edit/{paciente}', [PacienteController::class, 'update'])->name('paciente.update');
 
-    Route::get('/paciente/paginate', [ PacienteController::class, 'paginate' ])->name('paciente.paginate');
+    Route::get('/paciente/paginate', [PacienteController::class, 'paginate'])->name('paciente.paginate');
 
-    Route::delete('/paciente/{id}', [ PacienteController::class, 'destroy' ])->name('paciente.destroy');
+    Route::delete('/paciente/{id}', [PacienteController::class, 'destroy'])->name('paciente.destroy');
 
 
 
-    Route::get('/atencion-paciente', [ AtencionPacienteController::class, 'index'])->name('atencionpaciente.index');
-    Route::post('/atencion-paciente', [ AtencionPacienteController::class, 'store'])->name('atencionpaciente.store');
+    Route::get('/atencion-paciente', [AtencionPacienteController::class, 'index'])->name('atencionpaciente.index');
+    Route::post('/atencion-paciente', [AtencionPacienteController::class, 'store'])->name('atencionpaciente.store');
 });
+
+
+
+
+
+use App\Http\Controllers\UserController;
+
+Route::resource('roles', RoleController::class)->middleware(['auth:sanctum',    config('jetstream.auth_session'),    'verified']);
+Route::resource('permissions', PermissionController::class)->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']);
+
+
+Route::resource('users', UserController::class)->middleware(['auth:sanctum',    config('jetstream.auth_session'),    'verified']);
+
+Route::get('users/{user}/roles', [UserController::class, 'editRoles'])->name('users.roles.edit')->middleware(['auth:sanctum',    config('jetstream.auth_session'),    'verified']);
+Route::post('users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.roles.update')->middleware(['auth:sanctum',    config('jetstream.auth_session'),    'verified']);

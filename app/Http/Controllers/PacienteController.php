@@ -85,9 +85,10 @@ class PacienteController extends Controller
             $paciente = Pacientes::create($paciente);
 
             User::create([
-                'name' => $paciente['fullname'],
-                'email' => $paciente['correo'],
-                'password' => Hash::make($paciente['identificacion']),
+                'name' => trim($paciente['fullname']),
+                'email' => trim($paciente['correo']),
+                'password' => Hash::make(trim($paciente['identificacion'])),
+                'tipo' => 'paciente'
             ]);
 
             return response()->json(["message" => "Paciente registrado correctamente."]);
