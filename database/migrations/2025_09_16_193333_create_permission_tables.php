@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Role;
 
 return new class extends Migration
 {
@@ -114,6 +115,18 @@ return new class extends Migration
         app('cache')
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
             ->forget(config('permission.cache.key'));
+
+
+
+        $roles = [
+            ['id' => 1, 'name' => 'Administrador', 'guard_name' => 'web'],
+            ['id' => 2, 'name' => 'Medico',       'guard_name' => 'web'],
+            ['id' => 3, 'name' => 'Paciente',     'guard_name' => 'web'],
+        ];
+
+        foreach ($roles as $role) {
+            Role::updateOrCreate(['id' => $role['id']], $role);
+        }
     }
 
     /**
