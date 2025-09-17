@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AtencionPacienteController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -23,15 +24,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    if (auth()->check() && (auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Medico'))) {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
-    } else {
-        Route::get('/dashboard', [PacienteController::class, 'dashboardpaciente'])->name('dashboard');
-    }
-});
+
+Route::get('/dashboard', [HomeController::class, 'dashboardpaciente'])->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->name('dashboard');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'role:Administrador|Medico'])->group(function () {
 
